@@ -1,0 +1,74 @@
+{% extends 'main.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    {% block content %}
+    <style>
+        .chatroom-container{
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+        }
+    </style>
+
+    <div class="chatroom-container"> 
+
+        <div> 
+    <h1>{{objects.name}},
+        {{objects.description}},
+        {{objects.created}}
+    </h1>
+    
+
+    <div class="comment-wrapper">
+        <h3>Conversation</h3>
+        <hr>
+        {% for convo in conversation %}
+        {% if request.user == convo.user %}
+        <a href="{% url 'delete_message' convo.id %}">Delete</a>
+        <p>@{{convo.user}},
+        {{convo.updated|timesince}} Ago</p>
+        <p>{{convo.body}}</p>
+        <hr>
+        {% else %}
+        <p>@{{convo.user}},
+            {{convo.updated|timesince}} Ago</p>
+            <p>{{convo.body}}</p>
+            <hr>
+        {% endif %}
+
+        {% endfor %}
+
+    </div>
+
+    {% if request.user.is_authenticated %}
+    <div class="message-form">
+        <form action="" method="POST">{% csrf_token %}
+            <input type="text" name="message_body" id="" placeholder="write your message">
+
+        </form>
+    </div>
+
+    {% endif %}
+
+    </div>
+
+    <div>
+        <h3>Participants</h3>
+        <hr>
+
+        {% for user in users %}
+        <p>@{{user.username}}</p>
+        {% endfor %}
+    </div>
+</div>
+    {% endblock %}
+
+</body>
+</html>

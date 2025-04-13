@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    {% if page == 'login' %}
+    <div>
+        <form method="POST">{% csrf_token %}
+            <label for="">UserName:</label>
+            <input type="text" name="username" id="" placeholder="Enter UserName">
+            <label for="">Password:</label>
+            <input type="password" name="password" id="" placeholder=" Enter Password">
+            <input type="submit" name="" id="" value="Login">
+        </form>
+        <h5>Haven't Registered yet! <a href="{% url 'user_register' %}">Sign_up</a></h5>
+    </div>
+
+    {% else %}
+
+
+    <div>
+        <form method="POST">{% csrf_token %}
+             {{form.as_p}}
+            <input type="submit" name="" id="" value="Login">
+        </form>
+        <h5>Already Registered <a href="{% url 'user_login' %}">Sign_in</a></h5>
+    </div>
+
+    {% endif %}
+
+    {% endblock %}
+</body>
+</html>
