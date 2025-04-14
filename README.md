@@ -1,8 +1,8 @@
-Django Study Chatroom App
+**Django Study Chatroom App**
 
 A Django-based web application that enables users to register, log in, and participate in topic-specific chatrooms for collaborative study and discussion.
 
-Features
+**Features**
 User Authentication: Secure registration and login functionality.
 
 Chatrooms: Users can join existing chatrooms or create new ones based on study topics.
@@ -13,7 +13,7 @@ User Profiles: Basic user profile management (planned feature).
 
 Responsive Design: Accessible on various devices (planned feature).
 
-Technologies Used
+**Technologies Used**
 Backend: Django (Python)
 
 Database: SQLite (default; can be switched to PostgreSQL)
