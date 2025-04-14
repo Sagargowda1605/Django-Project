@@ -38,5 +38,5 @@ pip install django
 Apply migrations:
 python manage.py migrate
 
-Run the server 
+Run the server :
 python manage.py runserver
