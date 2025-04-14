@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-
+  {% load static %}
 
     <div class="activities">
         <div class="activities__header">
@@ -19,7 +11,7 @@
           <div class="activities__boxHeader roomListRoom__header">
             <a href="{% url 'profile' Actvities_message.user.id %}" class="roomListRoom__author">
               <div class="avatar avatar--small active">
-                <img src="https://randomuser.me/api/portraits/men/13.jpg" />
+                <img src="{% static 'images/avatar.svg' %}" />
               </div>
               <p>
                 @{{Actvities_message.user}}

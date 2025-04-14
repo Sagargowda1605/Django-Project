@@ -4,10 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db.models import Q
 from .models import Room,Topic,Messages
-from .forms import RoomForm
+from .forms import RoomForm,UpdateUserForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from django.core.validators import validate_email
 
 # Create your views here.
 
@@ -25,7 +26,7 @@ def loginview(request):
         return redirect('Home')
     
     if request.method=="POST":
-        username=request.POST.get('username').lower()
+        username=request.POST.get('username').lower() 
         password=request.POST.get('password')
 
         try:
@@ -55,10 +56,10 @@ def logoutview(request):
 def register(request):
     form=UserCreationForm()
     context={
-        'form':form
+        'forms':form
     }
     if request.method=='POST':
-        form=form=UserCreationForm(request.POST)
+        form=UserCreationForm(request.POST)
         if form.is_valid():
             user=form.save(commit=False)
             user.username=user.username.lower()
@@ -121,6 +122,7 @@ def details(request,pk):
             body=request.POST.get('message_body')
         )
         obj.participants.add(request.user)
+        print(participants)
         return redirect('chatroom',pk=obj.id)
     context={
         'objects':obj,
@@ -183,5 +185,37 @@ def delete_Message(request,pk):
     
     # Redirect back to the same page
     return redirect(previous_page)
+
+
+@login_required(login_url='/login')
+def update_user_details(request, pk):
+    obj = User.objects.get(id=pk)
+    
+     
+    if request.method == 'POST':
+       
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        description = request.POST.get('user_bio')
+        
+        
+
+        # if you need to update the description or save it, then it separted user model has to created currently i am using the inbuilt model or user so i am saving these details 
+        # so you need to creaet the model form for that same for the avatar or photo
+        #  if you need to update or save that in the user model you need to creaet the seperate model and save irt there 
+        #for now 
+        if email:
+            obj.email = email.lower()
+        if username:
+            obj.username = username.lower()
+            
+         
+        obj.save()
+        return redirect('profile', pk=pk)
+    
+    context = {
+        'user': obj
+    }
+    return render(request, 'basepage/user_details.html', context)
 
 

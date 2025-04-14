@@ -15,13 +15,13 @@
         <div class="roomListRoom__header">
           <a href="{% url 'profile' object.host.id %}" class="roomListRoom__author">
             <div class="avatar avatar--small">
-              <img src="{% static 'images/avatar.jpg' %}" />
+              <img src="{% static 'images/avatar.svg' %}" />
             </div>
             <span>@{{object.host.username}}</span>
           </a>
 
           {% if request.user == object.host %}
-            <a href="deleteroom/{{object.id}}">Delete</a>
+            <a href="{% url 'deleteroom' object.id %}">Delete</a>
             <a href="updateroom/{{object.id}}">Edit</a>
             {% endif %}
           <div class="roomListRoom__actions">

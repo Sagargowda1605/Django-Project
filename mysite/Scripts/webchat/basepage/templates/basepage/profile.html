@@ -1,5 +1,7 @@
 {% extends 'main.html' %}
 
+{% load static %}
+
 
 
  
@@ -18,20 +20,20 @@
         <div class="profile">
           <div class="profile__avatar">
             <div class="avatar avatar--large active">
-              <img src="https://randomuser.me/api/portraits/men/11.jpg" />
+              <img src="{% static 'images/avatar.svg' %}" />
             </div>
           </div>
           <div class="profile__info">
             <h3>{{user.username}}</h3>
             <p>@{{user.username}}</p>
-            <a href="edit-user.html" class="btn btn--main btn--pill">Edit Profile</a>
+            {% if request.user == user %}
+            <a href="{% url 'update_user' user.id %}" class="btn btn--main btn--pill">Edit Profile</a>
+            {% endif %}
           </div>
           <div class="profile__about">
             <h3>About</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur illo tenetur
-              facilis sunt nemo debitis quisquam hic atque aut? Ducimus alias placeat optio
-              accusamus repudiandae quis ab ex exercitationem rem?
+              {{user.description}}
             </p>
           </div>
         </div>
