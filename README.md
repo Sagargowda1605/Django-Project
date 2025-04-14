@@ -21,3 +21,22 @@ Database: SQLite (default; can be switched to PostgreSQL)
 Frontend: HTML, CSS, JavaScript
 
 Version Control: Git
+
+**Installation**
+
+Clone the repository:
+git clone https://github.com/Sagargowda1605/Django-Project.git
+cd Django-Project
+
+Create a virtual environment:
+python -m venv env
+source env/bin/activate  # On Windows: env\Scripts\activate
+
+Install dependencies:
+pip install django 
+
+Apply migrations:
+python manage.py migrate
+
+Run the server 
+python manage.py runserver
