@@ -10,13 +10,4 @@ class RoomForm(ModelForm):
         fields='__all__'
         exclude=['host','participants']
 
-
-class UpdateUserForm(UserChangeForm):
-
-    passowrd=None
-
-    class meta:
-        model=User
-        fields=['email','username','description']
-
         

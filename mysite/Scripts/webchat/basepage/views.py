@@ -3,11 +3,11 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.db.models import Q
-from .models import Room,Topic,Messages
-from .forms import RoomForm,UpdateUserForm
+from .models import Room,Topic,Messages,Profile
+from .forms import RoomForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import validate_email
 
 # Create your views here.
@@ -96,11 +96,13 @@ def user_profile(request,pk):
     rooms=user.room_set.all()
     All_messages=user.messages_set.all()
     topics=Topic.objects.all() 
+    details=Profile.objects.get(id=pk)
     context={
         'user':user,
         'objects':rooms,
         'Actvities_messages':All_messages,
-        'topics':topics
+        'topics':topics,
+        'details':details
 
     }
 
@@ -190,6 +192,7 @@ def delete_Message(request,pk):
 @login_required(login_url='/login')
 def update_user_details(request, pk):
     obj = User.objects.get(id=pk)
+
     
      
     if request.method == 'POST':
@@ -197,6 +200,7 @@ def update_user_details(request, pk):
         email = request.POST.get('email')
         username = request.POST.get('username')
         description = request.POST.get('user_bio')
+        profile_pic = request.FILES.get('profile_pic')
         
         
 
@@ -208,9 +212,14 @@ def update_user_details(request, pk):
             obj.email = email.lower()
         if username:
             obj.username = username.lower()
+        if description:
+            obj.profile.bio = description
+        if profile_pic:
+            obj.profile.profile_picture = profile_pic
             
          
         obj.save()
+        obj.profile.save() 
         return redirect('profile', pk=pk)
     
     context = {

@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#AUTH_USER_MODEL = 'basepage.CustomUser'  # app_name.model_name format
+
 
 # Application definition
 
@@ -38,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'basepage',
+    #this is for the api its simple process checkf or the website django Rest API
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +123,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS=[
     BASE_DIR/'static'
 ]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
