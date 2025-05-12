@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      sh -c "sleep 5 &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+             
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/app
+    environment:
+      - POSTGRES_NAME=Study-bud
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Mattikere@1605
+      - POSTGRES_HOST=postgres
+      - DEBUG=1
+    ports:
+      - "8000:8000"
+    networks:
+      - django_network
+     
+  postgres:
+    image: postgres:alpine 
+    environment:
+      POSTGRES_USER: postgres                          
+      POSTGRES_PASSWORD: Mattikere@1605               
+      POSTGRES_DB: Study-bud 
+    volumes:
+      - pgdata:/var/lib/postgresql/data  
+    ports:
+      - "5432:5432"
+    networks:
+      - django_network  
+  
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  django_network:
+    driver: bridge
+  #Think of networks like a private communication channel for containers
+  #Allows containers to talk to each other securely
+  #In simple terms: Creates a virtual network where your Django app and database can communicate
+  #Isolation from other networks
